@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
       <label for="code">Code</label>
-      <textarea class="form-control" id="code" name="code" rows="3"></textarea>
+      <textarea class="form-control" id="code" onkeydown="keyPress(event)" name="code" rows="3"></textarea>
     </div>
     <div class="form-group">
       <label for="input">Inputs</label>
@@ -31,6 +31,54 @@
     <label for="output">Output</label>
     <textarea class="form-control" id="output" rows="3" readonly></textarea>
   </div>
+  <script type="text/javascript">
+  	var line = 1;
+  	var currentLine = 1;
+  	var indentation = 0;
+  	var code = document.getElementById("code");
+  	function keyPress(event){
+  		console.log(code.value);
+  		console.log(code.value.length);
+  		console.log(code.value[code.value.length-1]);
+  		if (event.shiftKey){
+  			switch(event.key){
+  				case "Tab" : 
+	  				event.preventDefault();
+	  				//code.value=code.value-"\t";
+	  				console.log("out-tab");
+					if(indentation>0){
+	  					indentation--;
+					}
+	  				break;
+  			}
+		}
+		else{
+	  		switch(event.key){
+	  			case "Tab" : 
+	  				event.preventDefault();
+	  				code.value=code.value+"\t";
+	  				console.log("tab");
+	  				indentation++;
+	  				break;
+	  			case "Enter" : 
+	  				event.preventDefault();
+	  				code.value=code.value+"\n";
+	  				temp=indentation;
+	  				while(temp!=0){
+	  					code.value=code.value+"\t";
+	  					temp--;
+	  				}
+	  				currentLine++;
+	  				line++;
+	  				break;
+	  			case "ArrowUp":if(currentLine>0){currentLine--};break;
+	  			case "ArrowDown":if(currentLine<line){currentLine++};break;
+	  			case "{": break;
+	  			default: console.log(event);
+	  		}
+  		}
+  	}
+  </script>
 </div>
 
 {% endblock %}
