@@ -1,5 +1,5 @@
 .vscode/
 *pycache
 *pyc
-./.idea
-./templates/codemirror-5.52.0
+.idea
+templates/codemirror-5.52.0
