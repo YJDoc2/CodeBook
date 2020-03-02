@@ -12,7 +12,8 @@ error_words = ['error', 'Error', 'exception', 'Exception']
 
 
 def del_files(id):
-    shutil.rmtree('./temp/'+id)
+    print('./temp/'+id)
+    shutil.rmtree('./temp/'+id+'/')
 
 
 @api.route('/api', methods=['POST'])
@@ -36,7 +37,7 @@ def handle():
     ipfile.flush()
     ipfile.close()
     ipfile = open('./temp/'+id+'/ip.txt', 'r')
-
+    cwd = os.getcwd()
     try:
         profile = lang.get_compile_profile(id)
         proc = subprocess.run(profile, stdin=ipfile, stdout=subprocess.PIPE,
@@ -49,7 +50,6 @@ def handle():
 
         if lang.type == Lang_type.COMPILED:
             profile = lang.get_run_profile(id)
-            cwd = os.getcwd()
             os.chdir('./temp/'+id)
             proc = subprocess.run(profile, stdin=ipfile, stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE, universal_newlines=True, timeout=5)
@@ -63,9 +63,8 @@ def handle():
 
     except subprocess.TimeoutExpired:
         ipfile.close()
+        os.chdir(cwd)
         del_files(id)
-        if lang.type == Lang_type.COMPILED:
-            del_files(id)
         return Response('Error : Timeout Occured', mimetype='text/plain', status=400)
 
     ipfile.close()
