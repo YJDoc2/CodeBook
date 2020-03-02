@@ -13,18 +13,26 @@
   </head>
   <body style="background:#eeeeee">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Online IDE</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Online IDE</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="navbar-brand" href="/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+        <li><a class="navbar-brand" href="/signup"><span class="glyphicon glyphicon-log-in"></span>Sign Up</a></li>
+      </ul>
+    </div>
     </nav>
     <div id="content">{% block content %}{% endblock %}</div>
     <script

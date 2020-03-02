@@ -9,6 +9,8 @@ autopep8 = "*"
 
 [packages]
 flask = "*"
+flask-mongoengine = "*"
+bcrypt = "*"
 
 [requires]
 python_version = "3.7"
