@@ -1,0 +1,135 @@
+{% extends "base.html" %} {% block content %}
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="{{url_for('static', filename='codemirror.css')}}">
+<script src="{{url_for('static', filename='codemirror.js')}}"></script>
+<script src="{{url_for('static', filename='addon/edit/matchbrackets.js')}}"></script>
+<style>
+div, form, input, select, textarea, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+}
+h1.overlay {
+      position: absolute;
+      margin: 0;
+      font-size: 3em;
+      color: #fff;
+      z-index: 2;
+}
+.testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+}
+form {
+      width: 100%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 20px 0 #095484; 
+}
+div.ide{
+      border:1px solid #ccc;
+}
+.banner {
+      position: relative;
+      height: 380px;
+      width: auto;
+      background-image: url("laptop.jpeg");  
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+}
+.banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.5); 
+      position: absolute;
+      width: 100%;
+      height: 100%;
+}
+input, textarea {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+}
+input {
+      width: calc(100% - 10px);
+      padding: 5px;
+}
+textarea {
+      width: calc(100% - 12px);
+      padding: 5px;
+}
+label{
+      font-weight: bold;
+}
+span.required {
+      margin-left: 0;
+      color: red;
+}
+button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px; 
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+}
+@media screen and (max-width: 768px){
+      .banner{
+            height: 200px;
+      }
+}
+</style>
+<div class="testbox">
+    <form action="/">
+            <div class="banner">
+              <h1 class="overlay">Submit a Challenge</h1>
+            </div>
+            <hr align="center" style="background-color: #000;width: 80%"/><br/>
+            <div class="form-group">
+                  <label for="title">Challenge Title</label>
+                  <input type="text" name="title" id="title" class="form-control"/>
+            </div>
+            <label for="description">Description<span class="required">*</span></label>
+            <textarea name="description" id="description" rows="6" class="form-control" required></textarea>
+            <br/>
+            <h4><label for="code">Sample Code:</label></h4>
+            <div class="form-group">
+            <label for="lang">Language</label>
+            <select class="form-control" id="lang" name="lang">
+              {% for lang in langs.keys() %}
+              <option>{{lang}}</option>
+              {% endfor %}
+            </select>
+          </div>
+            <div class="ide">
+                  <textarea class="form-control" style="font-family: Consolas;" id="code" name="code" required></textarea>
+            </div><br/>
+            <label for="code">Test Cases:</label>
+            <input type="text" name="input" id="input" class="form-control" />
+            <div align="center">
+                  <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+            </div>
+            </div>
+            </div>
+      </form>
+      <script type="text/javascript">
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            lineNumbers: true,
+            mode: "text/html",
+            matchBrackets: true,
+            });
+      </script>
+</div>
+{% endblock %}
