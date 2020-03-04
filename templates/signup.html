@@ -1,42 +1,94 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} {%block links%} {{super()}}
 <!-- Font Icon -->
-<link rel="stylesheet" href="{{url_for('static', filename='fonts/material-icon/css/material-design-iconic-font.min.css' )}}">
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='fonts/material-icon/css/material-design-iconic-font.min.css' )}}"
+/>
 
 <!-- Main css -->
-<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+{%endblock%}
 <!-- Sign up form -->
-<br/>
-<div class="container">
-    <div class="signup-content">
-        <div class="signup-form">
-            <h2 class="form-title">Sign up</h2>
-            <form method="POST" class="register-form" id="register-form">
-                <div class="form-group">
-                    <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                    <input type="text" name="username" id="username" placeholder="Username"/>
-                </div>
-                <div class="form-group">
-                    <label for="email"><i class="zmdi zmdi-email"></i></label>
-                    <input type="email" name="email" id="email" placeholder="Your Email"/>
-                </div>
-                <div class="form-group">
-                    <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                    <input type="password" name="pass" id="pass" placeholder="Password"/>
-                </div>
-                <div class="form-group">
-                    <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                    <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
-                </div>
-                <div class="form-group form-button">
-                    <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
-                </div>
-            </form>
-        </div>
-        <div class="signup-image">
-            <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>
-            <a href="/login" class="signup-image-link">I am already member</a>
-        </div>
-    </div>
+<br />
+
+{% if error %}
+<div class="container bg-danger">
+  <div class="m-2 text-white" style="font-size:x-large;text-align: center;">
+    {{error}}
+  </div>
 </div>
-<br/>
+{% endif %}
+<div class="container">
+  <div class="signup-content">
+    <div class="signup-form">
+      <h2 class="form-title">Sign up</h2>
+      <form
+        method="POST"
+        class="register-form"
+        id="register-form"
+        action="/user/signup"
+      >
+        <div class="form-group">
+          <label for="username"
+            ><i class="zmdi zmdi-account material-icons-name"></i
+          ></label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email"><i class="zmdi zmdi-email"></i></label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Your Email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password"><i class="zmdi zmdi-lock"></i></label>
+          <input
+            type="password"
+            name="password"
+            id="pass"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password1"><i class="zmdi zmdi-lock-outline"></i></label>
+          <input
+            type="password"
+            name="password1"
+            id="re_pass"
+            placeholder="Repeat your password"
+            required
+          />
+        </div>
+        <div class="form-group form-button">
+          <input
+            type="submit"
+            name="signup"
+            id="signup"
+            class="form-submit"
+            value="Register"
+            required
+          />
+        </div>
+      </form>
+    </div>
+    <div class="signup-image">
+      <figure>
+        <img src="/images/signup-image.jpg" alt="sing up image" />
+      </figure>
+      <a href="/login" class="signup-image-link">I am already member</a>
+    </div>
+  </div>
+</div>
+<br />
 {% endblock %}
