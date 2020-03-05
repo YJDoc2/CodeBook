@@ -91,20 +91,20 @@ button {
       }
 }
 </style>
-<div class="testbox">
+<div class="container testbox">
     <form action="/">
             <div class="banner">
               <h1 class="overlay">Submit a Challenge</h1>
             </div>
             <hr align="center" style="background-color: #000;width: 80%"/><br/>
             <div class="form-group">
-                  <label for="title">Challenge Title</label>
-                  <input type="text" name="title" id="title" class="form-control"/>
+                  <label for="title">Challenge Title<span class="required">*</span></label>
+                  <input type="text" name="title" id="title" class="form-control" required/>
             </div>
             <label for="description">Description<span class="required">*</span></label>
             <textarea name="description" id="description" rows="6" class="form-control" required></textarea>
             <br/>
-            <h4><label for="code">Sample Code:</label></h4>
+            <h4><label for="code">Your Solution<span class="required">*</span></label></h4>
             <div class="form-group">
             <label for="lang">Language</label>
             <select class="form-control" id="lang" name="lang">
@@ -117,7 +117,37 @@ button {
                   <textarea class="form-control" style="font-family: Consolas;" id="code" name="code" required></textarea>
             </div><br/>
             <label for="code">Test Cases:</label>
-            <input type="text" name="input" id="input" class="form-control" />
+            <div class="m-2 text-danger" id="tab_warning" style="font-size:x-large;text-align: center;"></div>
+            <div>
+                  <ul class="nav nav-tabs" id="test_case_tabs" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="TC1" data-toggle="tab" href="#TC1D" role="tab" aria-controls="home" aria-selected="true">Test Case 1</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="TC2" data-toggle="tab" href="#TC2D" role="tab" aria-controls="profile" aria-selected="false">Test Case 2</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="TC3" data-toggle="tab" href="#TC3D" role="tab" aria-controls="contact" aria-selected="false">Test Case 3</a>
+                        </li>
+                        <li class="nav-item">
+                              <span class="nav-link" id="ADD_TC" onclick="create_tc()" role="tab" aria-controls="contact" aria-selected="false">+</span>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="TCTA">
+                        <div class="tab-pane fade show active" id="TC1D" role="tabpanel" aria-labelledby="home-tab">
+                              <textarea class="form-control" id="TCTA1" rows="3"></textarea>
+
+                        </div>
+                        <div class="tab-pane fade" id="TC2D" role="tabpanel" aria-labelledby="profile-tab">
+                              <textarea class="form-control" id="TCTA2" rows="3"></textarea>
+                        </div>
+                        <div class="tab-pane fade" id="TC3D" role="tabpanel" aria-labelledby="contact-tab">
+                              <textarea class="form-control" id="TCTA3" rows="3"></textarea>
+                        </div>
+                        
+                      </div>
+
+            </div>
             <div align="center">
                   <button type="submit" class="btn btn-lg btn-primary">Submit</button>
             </div>
@@ -130,6 +160,28 @@ button {
             mode: "text/html",
             matchBrackets: true,
             });
+      </script>
+      <script>
+            let tabs = 3
+            function create_tc(e){
+                  ++tabs;
+                  if(tabs>10){
+                        --tabs;
+                        $("#tab_warning").html("Sorry Cannot Add more than 10 tabs in V. Alpha");
+                  }else{
+                  
+                  $("#test_case_tabs").append(`<li class="nav-item">
+                        <a class="nav-link" id="TC${tabs}" data-toggle="tab" href="#TC${tabs}D" role="tab" aria-controls="contact" aria-selected="false">Test Case ${tabs}</a>
+                  </li>`);
+                  $("#ADD_TC").remove();
+                  $("#test_case_tabs").append(`<li class="nav-item">
+                              <span class="nav-link" id="ADD_TC" onclick="create_tc()" role="tab" aria-controls="contact" aria-selected="false">+</span>
+                        </li>`);
+                        $("#TCTA").append(`<div class="tab-pane fade" id="TC${tabs}D" role="tabpanel" aria-labelledby="contact-tab">
+                              <textarea class="form-control" id="TCTA${tabs}" rows="3"></textarea>
+                        </div>`);
+                  }
+            }
       </script>
 </div>
 {% endblock %}
