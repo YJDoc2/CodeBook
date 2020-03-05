@@ -4,7 +4,7 @@ from flask_mongoengine import MongoEngine
 from models.User import User
 from routes.api import api
 from routes.user import user
-
+from routes.post import post
 db = MongoEngine()
 
 app = Flask(__name__, static_folder='./static', static_url_path='/')
@@ -13,6 +13,7 @@ db.init_app(app)
 
 app.register_blueprint(api)
 app.register_blueprint(user)
+app.register_blueprint(post)
 
 
 @app.route('/')
@@ -40,4 +41,4 @@ def challenge():
     return render_template('challengeform.html', langs=langs)
 
 
-app.run(host='0.0.0.0', port='8000', debug=True)
+app.run(host='0.0.0.0', port='5000', debug=True)

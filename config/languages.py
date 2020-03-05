@@ -12,6 +12,8 @@ class C:
     compiler = 'gcc'
     ops = '-o'
     type = Lang_type.COMPILED
+    invalid = ["fopen", "fscan", "fgetc", "fprintf",
+               "fputs", "fseek", "rewind", "fclose", "exec", "open", "openfd"]
 
     @staticmethod
     def get_compile_profile(id):
@@ -30,6 +32,7 @@ class CPP:
     compiler = 'g++'
     ops = '-o'
     type = Lang_type.COMPILED
+    invalid = ["ofstream", "ifstream", "fstream"]
 
     @staticmethod
     def get_compile_profile(id):
@@ -48,6 +51,7 @@ class CPP14:
     compiler = 'g++'
     ops = '-std=c++14 -o'
     type = Lang_type.COMPILED
+    invalid = ["ofstream", "ifstream", "fstream"]
 
     @staticmethod
     def get_compile_profile(id):
@@ -66,6 +70,7 @@ class JAVA:
     compiler = 'javac'
     ops = ''
     type = Lang_type.COMPILED
+    invalid = ["write", "close"]
 
     @staticmethod
     def get_compile_profile(id):
@@ -101,6 +106,7 @@ class PYTHON2:
     compiler = 'python2'
     ops = ''
     type = Lang_type.INTERPRETED
+    invalid = ["open"]
 
     @staticmethod
     def get_compile_profile(id):
@@ -119,6 +125,7 @@ class PYTHON3:
     compiler = 'python3'
     ops = ''
     type = Lang_type.INTERPRETED
+    invalid = ["open"]
 
     @staticmethod
     def get_compile_profile(id):
