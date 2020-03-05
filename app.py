@@ -16,8 +16,8 @@ app.register_blueprint(user)
 app.register_blueprint(post)
 
 
-@app.route('/')
-def home():
+@app.route('/compiler')
+def compiler():
     return render_template('home.html', langs=langs)
 
 
@@ -39,6 +39,7 @@ def signup():
 @app.route('/challenge')
 def challenge():
     return render_template('challengeform.html', langs=langs)
+
 
 
 app.run(host='0.0.0.0', port='5000', debug=True)
