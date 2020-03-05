@@ -1,11 +1,11 @@
-{% extends "base.html" %} {% block content %}
+{% extends "navbar.html" %} {% block content %}
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 <link rel="stylesheet" href="{{url_for('static', filename='codemirror.css')}}">
 <script src="{{url_for('static', filename='codemirror.js')}}"></script>
 <script src="{{url_for('static', filename='addon/edit/matchbrackets.js')}}"></script>
 <style>
-div, form, input, select, textarea, p { 
+form, input, select, textarea, p { 
       padding: 0;
       margin: 0;
       outline: none;
@@ -40,7 +40,7 @@ div.ide{
 }
 .banner {
       position: relative;
-      height: 380px;
+      height: 350px;
       width: auto;
       background-image: url("laptop.jpeg");  
       background-size: cover;
@@ -102,7 +102,7 @@ button {
                   <input type="text" name="title" id="title" class="form-control" required/>
             </div>
             <label for="description">Description<span class="required">*</span></label>
-            <textarea name="description" id="description" rows="6" class="form-control" required></textarea>
+            <textarea name="description" id="description" rows="3" class="form-control" required></textarea>
             <br/>
             <h4><label for="code">Your Solution<span class="required">*</span></label></h4>
             <div class="form-group">
