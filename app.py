@@ -16,8 +16,8 @@ app.register_blueprint(user)
 app.register_blueprint(post)
 
 
-@app.route('/ide')
-def ide():
+@app.route('/compiler')
+def compiler():
     return render_template('home.html', langs=langs)
 
 
