@@ -6,8 +6,9 @@ import uuid
 class Post(Document):
     ID = UUIDField(primary_key=True, default=uuid.uuid4)
     originalPostBy = StringField(required=True)
-    question = StringField(required=True)
+    title = StringField(required=True)
+    description = StringField(required=True)
     code = StringField(required=True)
-    # testcases = ListField(StringField, required=True)
-    # outputs = ListField(StringField, required=True)
-    # solvedBy = ListField(StringField)
+    testcases = ListField(StringField, required=True)
+    outputs = ListField(StringField, required=True)
+    solvedBy = ListField(StringField)
