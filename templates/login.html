@@ -1,4 +1,4 @@
-{% extends "navbar.html" %}  {%block links%} {{super()}}
+{% extends "navbar.html" %} {%block links%} {{super()}}
 <!-- Font Icon -->
 <link
   rel="stylesheet"
@@ -13,14 +13,18 @@
 
 <br />
 <!-- Sing in  Form -->
-{% if error %}
+
 <div class="container bg-danger">
-  <div class="m-2 text-white" style="font-size:x-large;text-align: center;">
-    {{error}}
+  <div
+    class="m-2 text-white"
+    id="err"
+    style="font-size:x-large;text-align: center;"
+  >
+    {% if error %} {{error}} {% endif %}
   </div>
 </div>
-{% endif %}
-<br/><br/>
+
+<br /><br />
 <div class="container">
   <div class="signin-content">
     <div class="signin-image">
@@ -32,46 +36,58 @@
 
     <div class="signin-form">
       <h2 class="form-title">Log in</h2>
-      <form
-        method="POST"
-        class="register-form"
-        id="login-form"
-        action="/user/login"
-      >
-        <div class="form-group">
-          <label for="username"
-            ><i class="zmdi zmdi-account material-icons-name"></i
-          ></label>
-          <input
-            type="text"
-            name="username"
-            id="user_name"
-            placeholder="Username"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="password"><i class="zmdi zmdi-lock"></i></label>
-          <input
-            type="password"
-            name="password"
-            id="your_pass"
-            placeholder="Password"
-            required
-          />
-        </div>
-        <div class="form-group form-button">
-          <input
-            type="submit"
-            name="signin"
-            id="signin"
-            class="form-submit"
-            value="Log in"
-          />
-        </div>
-      </form>
+
+      <div class="form-group">
+        <label for="username"
+          ><i class="zmdi zmdi-account material-icons-name"></i
+        ></label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password"><i class="zmdi zmdi-lock"></i></label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <div class="form-group form-button">
+        <button class="btn form-submit" value="Log in" onclick="submit()">
+          Log In
+        </button>
+      </div>
     </div>
   </div>
 </div>
 <br />
+<script>
+  function submit() {
+    $.ajax({
+      type: 'POST',
+      url: '/user/login',
+      data: { username: $('#username').val(), password: $('#password').val() },
+    }).done(data => {
+      if (data.success) {
+        $.ajaxSetup({
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + data.token);
+          },
+        });
+        window.location.href = data.link;
+      } else {
+        $('#err').html(data.err);
+      }
+    });
+
+    return false;
+  }
+</script>
 {% endblock %}

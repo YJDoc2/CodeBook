@@ -146,7 +146,7 @@
     </div>
     <div class="ide">
       <textarea
-        class="form-control"
+        class="form-control code"
         style="font-family: Consolas;"
         id="code"
         name="code"
@@ -154,7 +154,12 @@
       ></textarea>
     </div>
     <br />
-    <label for="code">Test Cases:</label>
+    <label for="testcases">Test Cases:</label>
+    <div
+      class="m-2 text-danger"
+      id="err"
+      style="font-size:x-large;text-align: center;"
+    ></div>
     <div
       class="m-2 text-danger"
       id="tc_missing_warning"
@@ -286,7 +291,6 @@
   <script>
     function handle_submit() {
       let tc = [];
-
       $('.tc').each(function temp() {
         let tmp = $(this)
           .val()
@@ -296,25 +300,37 @@
         }
         tc.push(tmp);
       });
+
       if (tc.length === 0) {
         $('#tc_missing_warning').text('Provide at least one test case...');
-        console.log(tc);
         return;
       }
-
-      $.post(
-        '/api/post',
-        {
+      $.ajax({
+        type: 'POST',
+        url: '/api/post',
+        xhrFields: {
+          withCredentials: true,
+        },
+        headers: {
+          'X-CSRF-TOKEN': Cookies.get('csrf_access_token'),
+        },
+        data: {
           title: $('#title').val(),
           description: $('#description').val(),
           lang: $('#lang').val(),
-          code: $('#code').val(),
+          code: editor.getValue(),
           testcases: JSON.stringify(tc),
         },
-        data => {
-          console.log(data);
-        }
-      );
+        success: function(data) {
+          if (!data.success) {
+            $('#err').html(data.err);
+          }
+          window.location.replace(data.link);
+        },
+        error: function(e) {
+          console.log(e);
+        },
+      });
     }
   </script>
 </div>

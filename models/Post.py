@@ -1,5 +1,4 @@
-from mongoengine import StringField, ListField, UUIDField
-from flask_mongoengine import Document
+from mongoengine import StringField, ListField, UUIDField, Document
 import uuid
 
 
@@ -9,6 +8,6 @@ class Post(Document):
     title = StringField(required=True)
     description = StringField(required=True)
     code = StringField(required=True)
-    testcases = ListField(StringField, required=True)
-    outputs = ListField(StringField, required=True)
-    solvedBy = ListField(StringField)
+    testcases = ListField(StringField(), required=True)
+    outputs = ListField(StringField(), required=True)
+    solvedBy = ListField(StringField())

@@ -1,8 +1,11 @@
-from flask import request, Response, Blueprint, json, session, render_template, redirect
-import bcrypt
+from flask import request, Response, Blueprint, json, session, render_template, redirect, session
+from config import blacklist
+from flask_jwt_extended import create_access_token, get_raw_jwt, jwt_required, set_access_cookies, unset_jwt_cookies
 from mongoengine.errors import NotUniqueError
 from models.User import User
+import bcrypt
 import re
+import datetime
 
 user = Blueprint('user', __name__)
 
@@ -14,26 +17,31 @@ email_rx = re.compile(r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$')
 def login():
     data = request.form.to_dict()
     if 'username' not in data or 'password' not in data or data['username'].strip() == '' or data['password'].strip() == '':
-        print(data)
-        return render_template('login.html', error='Please Fill All Fields')
-        # * FOR API return Response(json.dumps({'Success': 'False', 'error': 'Incomplete Fields'}), mimetype="application/json", status=404)
+        # return render_template('login.html', error='Please Fill All Fields')
+        return Response(json.dumps({'success': False, 'err': 'Incomplete Fields'}), mimetype="application/json", status=200)
     temp = User.objects(username=data['username'])
     if len(temp) == 0:
-        return render_template('login.html', error='The Email is not registered')
-        # * FOR API return Response(json.dumps({'Success': 'False', 'Error': 'User Does not Exist'}), mimetype="application/json", status=404)
+        # return render_template('login.html', error='The Email is not registered')
+        return Response(json.dumps({'success': False, 'err': 'User Does not Exist'}), mimetype="application/json", status=200)
     temp = temp[0]
     if bcrypt.checkpw(data['password'].encode('utf-8'), temp.password.encode('utf-8')):
-        return redirect('/')
-        # * FOR API return Response(json.dumps({'Success': 'True'}), mimetype="application/json", status=200)
+        expires = datetime.timedelta(days=1)
+        token = create_access_token(
+            identity=temp.username, expires_delta=expires)
+        resp = Response(json.dumps({'success': True, 'token': token,
+                                    'link': '/dashboard'}), mimetype="application/json", status=200)
+        set_access_cookies(resp, token)
+        return resp
+        # return redirect('/dashboard')
     else:
-        return render_template('login.html', error='Password Does not match')
-        # * FOR API return Response(json.dumps({'Error': 'Password does not match'}), mimetype="application/json", status=400)
+        # return render_template('login.html', error='Password Does not match')
+        return Response(json.dumps({'success': False, 'err': 'Password does not match'}), mimetype="application/json", status=200)
 
 
 @user.route('/user/signup', methods=['POST'])
 def signup():
     data = request.form.to_dict()
-    print(data)
+
     if 'email' not in data or 'password' not in data or 'username' not in data or 'password1' not in data \
             or data['email'].strip() == '' or data['password'].strip() == '' or data['username'].strip() == '':
         return render_template('signup.html', error='Please Fill All Fields')
@@ -53,5 +61,21 @@ def signup():
         return render_template('signup.html', error='Username / Email Already Registered')
         # * FOR API
 
-    return redirect('/')
+    return redirect('/login')
     # * FOR API return Response(json.dumps({'Success': 'True'}), mimetype="application/json", status=201)
+
+
+@user.route('/user/find/<string:name>', methods=['GET'])
+def find(name):
+    pattern = re.compile(name)
+    return json.jsonify(User.objects(username=pattern))
+
+
+@user.route('/user/logout', methods=['GET'])
+@jwt_required
+def logout():
+    jti = get_raw_jwt()['jti']
+    blacklist.add(jti)
+    resp = redirect('/')
+    unset_jwt_cookies(resp)
+    return resp
