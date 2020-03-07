@@ -15,6 +15,9 @@ app.register_blueprint(api)
 app.register_blueprint(user)
 app.register_blueprint(post)
 
+@app.route('/')
+def homepage():
+	return render_template('homepage.html')
 
 @app.route('/compiler')
 def compiler():

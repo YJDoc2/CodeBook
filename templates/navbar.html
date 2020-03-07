@@ -16,7 +16,7 @@
 		#sidebar {
 			min-width: 270px;
 			max-width: 270px;
-			background: #494ca2;
+			background: #16409E;
 			color: #fff;
 			-webkit-transition: all 0.3s;
 			-o-transition: all 0.3s;
@@ -100,6 +100,13 @@
 		  -webkit-transition: all 0.3s;
 		  -o-transition: all 0.3s;
 		  transition: all 0.3s; }
+
+		@media screen and (max-width: 768px){
+		  .pageBody{
+		  	margin-top: 50px;
+		  	margin-left: 0px !important;
+		  }
+		}
 	</style>
     {% block links%}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -130,7 +137,7 @@
 	        </button>
         </div>
 				<div class="p-4">
-		  		<h1><a href="/dashboard" class="logo">CodeBook</a></h1>
+		  		<h1><a href="/" class="logo">CodeBook</a></h1>
 	        <ul class="list-unstyled components mb-5">
 	          <li id="dashboard">
 	            <a href="/dashboard"><span class="fa fa-home mr-3"></span> Home</a>
@@ -161,7 +168,7 @@
     	</nav>
     </font>
         <!-- Page Content  -->
-      <div id="content" class="container" style="background:#eeeeee">
+      <div id="content" class="pageBody" style="background:#eeeeee;margin-right: 0;z-index: -1">
         {% block content %}{% endblock %}
 	  </div>
 
