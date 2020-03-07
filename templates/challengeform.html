@@ -133,6 +133,13 @@
       required
     ></textarea>
     <br />
+    <div class="form-group">
+      <label for="lang">Type</label>
+      <select class="form-control" id="type" name="lang">
+        <option>Global</option>
+        <option>Private</option>
+      </select>
+    </div>
     <h4>
       <label for="code">Your Solution<span class="required">*</span></label>
     </h4>
@@ -317,6 +324,7 @@
         data: {
           title: $('#title').val(),
           description: $('#description').val(),
+          type: $('#type').val(),
           lang: $('#lang').val(),
           code: editor.getValue(),
           testcases: JSON.stringify(tc),

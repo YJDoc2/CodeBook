@@ -7,7 +7,9 @@ class Post(Document):
     originalPostBy = StringField(required=True)
     title = StringField(required=True)
     description = StringField(required=True)
+    qtype = StringField(default='Global')
     code = StringField(required=True)
     testcases = ListField(StringField(), required=True)
     outputs = ListField(StringField(), required=True)
     solvedBy = ListField(StringField())
+    meta = {'collection': 'posts'}

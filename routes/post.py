@@ -16,6 +16,7 @@ ename = re.compile(r'File \./temp/*\.py$')
 def postChallenge():
     data = request.form.to_dict()
     ops = []
+    qtype = data['type']
     data['testcases'] = json.loads(data['testcases'])
     lang = langs[data['lang']]
     user = get_jwt_identity()
@@ -36,9 +37,8 @@ def postChallenge():
                 ops.append(op['output'])
 
     # return Response(json.dumps({'Success': 'True', 'op': ops}), mimetype="application/json", status=200)
-    temp = Post(originalPostBy=user, title=data['title'],
+    temp = Post(originalPostBy=user, title=data['title'], qtype=qtype,
                 description=data['description'], code=data['code'], testcases=data['testcases'], outputs=ops)
-    temp.switch_collection('posts')
     temp.save()
     User.objects(username=get_jwt_identity()).update_one(push__posts=temp.ID)
     return Response(json.dumps({'Success': True, 'link': '/dashboard'}), mimetype="application/json", status=201)

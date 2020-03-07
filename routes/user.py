@@ -65,10 +65,18 @@ def signup():
     # * FOR API return Response(json.dumps({'Success': 'True'}), mimetype="application/json", status=201)
 
 
-@user.route('/user/find/<string:name>', methods=['GET'])
+@user.route('/api/find/<string:name>', methods=['GET'])
 def find(name):
-    pattern = re.compile(name)
-    return json.jsonify(User.objects(username=pattern))
+    pattern = re.compile(name, re.IGNORECASE)
+    ret = User.objects(username=pattern)
+    ret = [user.to_mongo() for user in ret]
+    for user in ret:
+        del user['_id']
+        del user['password']
+        del user['posts']
+        del user['following']
+        del user['followers']
+    return Response(json.dumps({'Success': True, 'users': ret}), mimetype="application/json", status=201)
 
 
 @user.route('/user/logout', methods=['GET'])
