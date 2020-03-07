@@ -71,7 +71,9 @@
       headers: {
         'X-CSRF-TOKEN': Cookies.get('csrf_access_token'),
       },
-      success: function(data) {},
+      success: function(data) {
+        $(`#${name}`).remove();
+      },
       error: function(e) {
         console.log(e);
       },

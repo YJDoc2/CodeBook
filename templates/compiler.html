@@ -1,0 +1,81 @@
+{% extends "navbar.html" %} {% block content %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='codemirror.css')}}"
+/>
+<script src="{{url_for('static', filename='codemirror.js')}}"></script>
+<script src="{{url_for('static', filename='addon/edit/matchbrackets.js')}}"></script>
+<div class="container">
+  <br />
+  <h2>Online IDE</h2>
+  <br />
+  <div
+    class="m-2 text-danger"
+    id="err"
+    style="font-size:x-large;text-align: center;"
+  ></div>
+  <div class="form-group">
+    <label for="lang">Language</label>
+    <select class="form-control" id="lang" name="lang">
+      {% for lang in langs.keys() %}
+      <option>{{lang}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="code">Code</label>
+    <textarea
+      class="form-control"
+      style="font-family: Consolas;"
+      id="code"
+      name="code"
+      rows="3"
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <label for="input">Inputs</label>
+    <textarea class="form-control" id="input" name="input" rows="3"></textarea>
+  </div>
+  <button class="btn btn-primary" onclick="handle_submit()">Submit</button>
+  <div class="form-group">
+    <label for="output">Output</label>
+    <textarea class="form-control" id="output" rows="3" readonly></textarea>
+  </div>
+  <script type="text/javascript">
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      lineNumbers: true,
+      mode: 'text/html',
+      matchBrackets: true,
+    });
+  </script>
+  <script>
+    function handle_submit() {
+      code = editor.getValue();
+      lang = $('#lang')
+        .val()
+        .trim();
+      ip = $('#input').val();
+      if (code === '' || lang === '') {
+        $('#err').text('Please Fill All Fields...');
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: '/api/compile',
+          data: {
+            code: code,
+            lang: lang,
+            ip: ip,
+          },
+          success: function(data) {
+            $('#output').val(data.err || data.output);
+          },
+          error: function(e) {
+            console.log(e);
+          },
+        });
+      }
+    }
+  </script>
+</div>
+
+{% endblock %}

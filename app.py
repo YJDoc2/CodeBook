@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, Response, jsonify
-from flask_jwt_extended import JWTManager, jwt_required
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from config import blacklist
 from models.Post import Post
 from config.lang_config import langs
@@ -8,8 +8,10 @@ from models.User import User
 from routes.api import api
 from routes.user import user
 from routes.post import post
+import random
 
 MAX_POSTS_GLOBAL_WALL = 100
+MAX_POSTS_DASHBOARD = 100
 
 db = MongoEngine()
 
@@ -57,14 +59,23 @@ def signup():
 
 @app.route('/compiler')
 def compiler():
-    return render_template('home.html', langs=langs)
+    return render_template('compiler.html', langs=langs)
 
 
 @app.route('/dashboard')
 @jwt_required
 def dashboard():
-    print(blacklist)
-    return render_template('dashboard.html', logged_in=True)
+    user = User.objects(username=get_jwt_identity())[0].to_mongo()
+    posts = []
+    for id in user['following']:
+        u = User.objects(id=id)[0].to_mongo()
+        for postid in u['posts']:
+            p = Post.objects(ID=postid)[0].to_mongo()
+            p['by'] = u['username']
+            posts.append(p)
+
+    random.shuffle(posts)
+    return render_template('dashboard.html', logged_in=True, posts=posts[:MAX_POSTS_DASHBOARD])
 
 
 @app.route('/challenge')

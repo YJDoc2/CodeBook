@@ -7,6 +7,6 @@ class User(Document):
     username = StringField(required=True, unique=True)
     email = EmailField(required=True, unique=True)
     password = StringField(required=True)
-    followers = ListField(StringField())
-    following = ListField(StringField())
+    followers = ListField(UUIDField())
+    following = ListField(UUIDField())
     posts = ListField(UUIDField())

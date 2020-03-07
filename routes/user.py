@@ -1,6 +1,6 @@
 from flask import request, Response, Blueprint, json, session, render_template, redirect, session
 from config import blacklist
-from flask_jwt_extended import create_access_token, get_raw_jwt, jwt_required, set_access_cookies, unset_jwt_cookies
+from flask_jwt_extended import create_access_token, get_raw_jwt, jwt_required, set_access_cookies, unset_jwt_cookies, get_jwt_identity
 from mongoengine.errors import NotUniqueError
 from models.User import User
 import bcrypt
@@ -66,10 +66,14 @@ def signup():
 
 
 @user.route('/api/find/<string:name>', methods=['GET'])
+@jwt_required
 def find(name):
     pattern = re.compile(name, re.IGNORECASE)
     ret = User.objects(username=pattern)
     ret = [user.to_mongo() for user in ret]
+    user = User.objects(username=get_jwt_identity())[0].to_mongo()
+    ret = [u for u in ret if (u['_id']
+                              not in user['following'] and u['username'] != user['username'])]
     for user in ret:
         del user['_id']
         del user['password']
@@ -77,6 +81,17 @@ def find(name):
         del user['following']
         del user['followers']
     return Response(json.dumps({'Success': True, 'users': ret}), mimetype="application/json", status=201)
+
+
+@user.route('/api/follow/<string:name>')
+@jwt_required
+def follow(name):
+    u1 = User.objects(username=get_jwt_identity())[0].to_mongo()
+    u2 = User.objects(username=name)[0].to_mongo()
+    User.objects(username=get_jwt_identity()).update_one(
+        push__following=u2['_id'])
+    User.objects(username=name).update_one(push__followers=u1['_id'])
+    return Response(json.dumps({'Success': True}), mimetype="application/json", status=201)
 
 
 @user.route('/user/logout', methods=['GET'])
