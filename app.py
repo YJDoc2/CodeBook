@@ -29,6 +29,9 @@ app.register_blueprint(api)
 app.register_blueprint(user)
 app.register_blueprint(post)
 
+@app.route('/')
+def homepage():
+	return render_template('homepage.html')
 
 @jwt.invalid_token_loader
 @jwt.unauthorized_loader
@@ -40,11 +43,6 @@ def invalid_token(reason):
 def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
     return jti in blacklist
-
-
-@app.route('/')
-def homepage():
-    return render_template('homepage.html')
 
 
 @app.route('/login')
@@ -98,5 +96,9 @@ def globalwall():
 def find_users():
     return render_template('findusers.html', logged_in=True)
 
+@app.route('/solve')
+#@jwt_required
+def solve():
+    return render_template('solve.html', langs=langs, logged_in=True)
 
 app.run(host='0.0.0.0', port='5000', debug=True)
