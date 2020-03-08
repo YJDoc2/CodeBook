@@ -1,5 +1,9 @@
 {% extends "navbar.html" %} {% block content %}
 <link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+  rel="stylesheet"
+/>
+<link
   rel="stylesheet"
   href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
   integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
@@ -51,7 +55,7 @@
   }
   .banner {
     position: relative;
-    height: 320px;
+    height: 300px;
     width: auto;
     background-image: url('laptop.jpeg');
     background-size: cover;
@@ -106,35 +110,15 @@
 <div class="container testbox">
   <form action="/">
     <div class="banner">
-      <h1 class="overlay">Submit a Challenge</h1>
+      <h1 class="overlay">*Question Title Here*</h1>
     </div>
     <hr align="center" style="background-color: #000;width: 80%" />
-    <br />
-    <div class="form-group">
-      <label for="title">Challenge Title<span class="required">*</span></label>
-      <input
-        type="text"
-        name="title"
-        id="title"
-        class="form-control"
-        required
-      />
-    </div>
-    <label for="description">Description<span class="required">*</span></label>
-    <textarea
-      name="description"
-      id="description"
-      rows="3"
-      class="form-control"
-      required
-    ></textarea>
-    <br />
-    <div class="form-group">
-      <label for="lang">Type</label>
-      <select class="form-control" id="type" name="lang">
-        <option>Global</option>
-        <option>Private</option>
-      </select>
+    <br/>
+    <div class="alert alert-primary" role="alert">
+      <h4 class="alert-heading">*Question Title*</h4>
+      <p><b>*Question Description*</b>Esse nulla mollit sint exercitation nostrud nostrud aliquip in nostrud mollit eiusmod pariatur reprehenderit culpa sunt fugiat pariatur esse aliqua ut enim ut quis adipisicing ut.</p>
+      <hr>
+      <p class="mb-0">Select the language of your choice and start writing your code below to test the output. You can submit the solution when you know your output is correct.</p>
     </div>
     <h4>
       <label for="code">Your Solution<span class="required">*</span></label>
@@ -211,17 +195,6 @@
             >Test Case 3</a
           >
         </li>
-        <li class="nav-item">
-          <span
-            class="nav-link"
-            id="ADD_TC"
-            onclick="create_tc()"
-            role="tab"
-            aria-controls="contact"
-            aria-selected="false"
-            >+</span
-          >
-        </li>
       </ul>
       <div class="tab-content" id="TCTA">
         <div
@@ -230,7 +203,7 @@
           role="tabpanel"
           aria-labelledby="home-tab"
         >
-          <textarea class="form-control tc" id="TCTA1" rows="3"></textarea>
+          <textarea disabled="true" class="form-control tc" id="TCTA1" rows="3">Test Case Here</textarea>
         </div>
         <div
           class="tab-pane fade"
@@ -238,7 +211,7 @@
           role="tabpanel"
           aria-labelledby="profile-tab"
         >
-          <textarea class="form-control tc" id="TCTA2" rows="3"></textarea>
+          <textarea disabled="true" class="form-control tc" id="TCTA2" rows="3"></textarea>
         </div>
         <div
           class="tab-pane fade"
@@ -246,50 +219,41 @@
           role="tabpanel"
           aria-labelledby="contact-tab"
         >
-          <textarea class="form-control tc" id="TCTA3" rows="3"></textarea>
+          <textarea disabled="true" class="form-control tc" id="TCTA3" rows="3"></textarea>
         </div>
       </div>
-    </div>
-    <div align="center">
+      <div>
+        <div>
+          <button
+          type="submit"
+          onclick="handle_submit()"
+          class="btn btn-primary"
+          style="width: auto"
+            >
+            Test Solution
+          </button>
+        </div><br/>
+        <label for="output">Output:</label>
+        <textarea disabled="true" class="form-control tc" id="output" rows="4">Output here</textarea>
+      </div>
+      <div align="center">
       <button
         type="submit"
         onclick="handle_submit()"
-        class="btn btn-lg btn-primary"
+        class="btn btn-lg btn-success"
+        style="width: auto"
       >
-        Submit
+        Submit Solution
       </button>
+    </form> 
     </div>
-  </form>
+  </div>
   <script type="text/javascript">
     var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
       lineNumbers: true,
       mode: 'text/html',
       matchBrackets: true,
     });
-  </script>
-  <script>
-    let tabs = 3;
-    function create_tc(e) {
-      ++tabs;
-      if (tabs > 10) {
-        --tabs;
-        $('#tab_warning').html(
-          'Sorry Cannot Add more than 10 tabs in V. Alpha'
-        );
-      } else {
-        $('#test_case_tabs').append(`<li class="nav-item">
-                        <a class="nav-link" id="TC${tabs}" data-toggle="tab" href="#TC${tabs}D" role="tab" aria-controls="contact" aria-selected="false">Test Case ${tabs}</a>
-                  </li>`);
-        $('#ADD_TC').remove();
-        $('#test_case_tabs').append(`<li class="nav-item">
-                              <span class="nav-link" id="ADD_TC" onclick="create_tc()" role="tab" aria-controls="contact" aria-selected="false">+</span>
-                        </li>`);
-        $('#TCTA')
-          .append(`<div class="tab-pane fade" id="TC${tabs}D" role="tabpanel" aria-labelledby="contact-tab">
-                        <textarea class="form-control tc" id="TCTA${tabs}" rows="3"></textarea>
-                  </div>`);
-      }
-    }
   </script>
   <script>
     function handle_submit() {

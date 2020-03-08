@@ -45,11 +45,6 @@ def check_if_token_in_blacklist(decrypted_token):
     return jti in blacklist
 
 
-@app.route('/')
-def homepage():
-    return render_template('homepage.html')
-
-
 @app.route('/login')
 def login():
     return render_template('login.html')
@@ -101,5 +96,9 @@ def globalwall():
 def find_users():
     return render_template('findusers.html', logged_in=True)
 
+@app.route('/solve')
+#@jwt_required
+def solve():
+    return render_template('solve.html', langs=langs, logged_in=True)
 
 app.run(host='0.0.0.0', port='5000', debug=True)
