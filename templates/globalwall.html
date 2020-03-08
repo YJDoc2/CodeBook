@@ -8,11 +8,8 @@
     style="box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 3px 10px 0 rgba(0,0,0,0.19) !important;"
   >
     <div class="card-header">
-      <h4>{{post.title}}</h4>
-      <h5 class="card-subtitle mb-2 text-muted">Shared By {{post.by}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">
-        Posted By {{post.originalPostBy}}
-      </h6>
+      <h5>{{post.title}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">By {{post.originalPostBy}}</h6>
     </div>
     <div class="card-body">
       <p class="card-text">
@@ -24,7 +21,7 @@
     </div>
   </div>
   <br />
-  {% endfor %}
+  {%endfor%}
   <!-- End -->
 </div>
 {% endblock %}

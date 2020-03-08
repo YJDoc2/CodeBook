@@ -1,187 +1,345 @@
 {% extends "navbar.html" %} {% block content %}
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-<link rel="stylesheet" href="{{url_for('static', filename='codemirror.css')}}">
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+  crossorigin="anonymous"
+/>
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='codemirror.css')}}"
+/>
 <script src="{{url_for('static', filename='codemirror.js')}}"></script>
 <script src="{{url_for('static', filename='addon/edit/matchbrackets.js')}}"></script>
 <style>
-form, input, select, textarea, p { 
-      padding: 0;
-      margin: 0;
-      outline: none;
-      font-family: Roboto, Arial, sans-serif;
-      font-size: 14px;
-      color: #666;
-      line-height: 22px;
-}
-h1.overlay {
-      position: absolute;
-      margin: 0;
-      font-size: 3em;
-      color: #fff;
-      z-index: 2;
-}
-.testbox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: inherit;
-      padding: 20px;
-}
-form {
-      width: 100%;
-      padding: 20px;
-      border-radius: 6px;
-      background: #fff;
-      box-shadow: 0 0 20px 0 #095484; 
-}
-div.ide{
-      border:1px solid #ccc;
-}
-.banner {
-      position: relative;
-      height: 350px;
-      width: auto;
-      background-image: url("laptop.jpeg");  
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-}
-.banner::after {
-      content: "";
-      background-color: rgba(0, 0, 0, 0.5); 
-      position: absolute;
-      width: 100%;
-      height: 100%;
-}
-input, textarea {
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-}
-input {
-      width: calc(100% - 10px);
-      padding: 5px;
-}
-textarea {
-      width: calc(100% - 12px);
-      padding: 5px;
-}
-label{
-      font-weight: bold;
-}
-span.required {
-      margin-left: 0;
-      color: red;
-}
-button {
-      width: 150px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px; 
-      font-size: 16px;
-      color: #fff;
-      cursor: pointer;
-}
-@media screen and (max-width: 768px){
-      .banner{
-            height: 200px;
-      }
-}
+  form,
+  input,
+  select,
+  textarea,
+  p {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 14px;
+    color: #666;
+    line-height: 22px;
+  }
+  h1.overlay {
+    position: absolute;
+    margin: 0;
+    font-size: 3em;
+    color: #fff;
+    z-index: 2;
+  }
+  .testbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    padding: 20px;
+  }
+  form {
+    width: 100%;
+    padding: 20px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 0 20px 0 #095484;
+  }
+  div.ide {
+    border: 1px solid #ccc;
+  }
+  .banner {
+    position: relative;
+    height: 350px;
+    width: auto;
+    background-image: url('laptop.jpeg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .banner::after {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  input,
+  textarea {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  input {
+    width: calc(100% - 10px);
+    padding: 5px;
+  }
+  textarea {
+    width: calc(100% - 12px);
+    padding: 5px;
+  }
+  label {
+    font-weight: bold;
+  }
+  span.required {
+    margin-left: 0;
+    color: red;
+  }
+  button {
+    width: 150px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+  }
+  @media screen and (max-width: 768px) {
+    .banner {
+      height: 200px;
+    }
+  }
 </style>
 <div class="container testbox">
-    <form action="/">
-            <div class="banner">
-              <h1 class="overlay">Submit a Challenge</h1>
-            </div>
-            <hr align="center" style="background-color: #000;width: 80%"/><br/>
-            <div class="form-group">
-                  <label for="title">Challenge Title<span class="required">*</span></label>
-                  <input type="text" name="title" id="title" class="form-control" required/>
-            </div>
-            <label for="description">Description<span class="required">*</span></label>
-            <textarea name="description" id="description" rows="3" class="form-control" required></textarea>
-            <br/>
-            <h4><label for="code">Your Solution<span class="required">*</span></label></h4>
-            <div class="form-group">
-            <label for="lang">Language</label>
-            <select class="form-control" id="lang" name="lang">
-              {% for lang in langs.keys() %}
-              <option>{{lang}}</option>
-              {% endfor %}
-            </select>
-          </div>
-            <div class="ide">
-                  <textarea class="form-control" style="font-family: Consolas;" id="code" name="code" required></textarea>
-            </div><br/>
-            <label for="code">Test Cases:</label>
-            <div class="m-2 text-danger" id="tab_warning" style="font-size:x-large;text-align: center;"></div>
-            <div>
-                  <ul class="nav nav-tabs" id="test_case_tabs" role="tablist">
-                        <li class="nav-item">
-                          <a class="nav-link active" id="TC1" data-toggle="tab" href="#TC1D" role="tab" aria-controls="home" aria-selected="true">Test Case 1</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" id="TC2" data-toggle="tab" href="#TC2D" role="tab" aria-controls="profile" aria-selected="false">Test Case 2</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" id="TC3" data-toggle="tab" href="#TC3D" role="tab" aria-controls="contact" aria-selected="false">Test Case 3</a>
-                        </li>
-                        <li class="nav-item">
-                              <span class="nav-link" id="ADD_TC" onclick="create_tc()" role="tab" aria-controls="contact" aria-selected="false">+</span>
-                        </li>
-                      </ul>
-                      <div class="tab-content" id="TCTA">
-                        <div class="tab-pane fade show active" id="TC1D" role="tabpanel" aria-labelledby="home-tab">
-                              <textarea class="form-control" id="TCTA1" rows="3"></textarea>
-
-                        </div>
-                        <div class="tab-pane fade" id="TC2D" role="tabpanel" aria-labelledby="profile-tab">
-                              <textarea class="form-control" id="TCTA2" rows="3"></textarea>
-                        </div>
-                        <div class="tab-pane fade" id="TC3D" role="tabpanel" aria-labelledby="contact-tab">
-                              <textarea class="form-control" id="TCTA3" rows="3"></textarea>
-                        </div>
-                        
-                      </div>
-
-            </div>
-            <div align="center">
-                  <button type="submit" class="btn btn-lg btn-primary">Submit</button>
-            </div>
-            </div>
-            </div>
-      </form>
-      <script type="text/javascript">
-            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-            lineNumbers: true,
-            mode: "text/html",
-            matchBrackets: true,
-            });
-      </script>
-      <script>
-            let tabs = 3
-            function create_tc(e){
-                  ++tabs;
-                  if(tabs>10){
-                        --tabs;
-                        $("#tab_warning").html("Sorry Cannot Add more than 10 tabs in V. Alpha");
-                  }else{
-                  
-                  $("#test_case_tabs").append(`<li class="nav-item">
+  <form action="/">
+    <div class="banner">
+      <h1 class="overlay">Submit a Challenge</h1>
+    </div>
+    <hr align="center" style="background-color: #000;width: 80%" />
+    <br />
+    <div class="form-group">
+      <label for="title">Challenge Title<span class="required">*</span></label>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        class="form-control"
+        required
+      />
+    </div>
+    <label for="description">Description<span class="required">*</span></label>
+    <textarea
+      name="description"
+      id="description"
+      rows="3"
+      class="form-control"
+      required
+    ></textarea>
+    <br />
+    <div class="form-group">
+      <label for="lang">Type</label>
+      <select class="form-control" id="type" name="lang">
+        <option>Global</option>
+        <option>Private</option>
+      </select>
+    </div>
+    <h4>
+      <label for="code">Your Solution<span class="required">*</span></label>
+    </h4>
+    <div class="form-group">
+      <label for="lang">Language</label>
+      <select class="form-control" id="lang" name="lang">
+        {% for lang in langs.keys() %}
+        <option>{{lang}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="ide">
+      <textarea
+        class="form-control code"
+        style="font-family: Consolas;"
+        id="code"
+        name="code"
+        required
+      ></textarea>
+    </div>
+    <br />
+    <label for="testcases">Test Cases:</label>
+    <div
+      class="m-2 text-danger"
+      id="err"
+      style="font-size:x-large;text-align: center;"
+    ></div>
+    <div
+      class="m-2 text-danger"
+      id="tc_missing_warning"
+      style="font-size:x-large;text-align: center;"
+    ></div>
+    <div
+      class="m-2 text-danger"
+      id="tab_warning"
+      style="font-size:x-large;text-align: center;"
+    ></div>
+    <div>
+      <ul class="nav nav-tabs" id="test_case_tabs" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="TC1"
+            data-toggle="tab"
+            href="#TC1D"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+            >Test Case 1</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="TC2"
+            data-toggle="tab"
+            href="#TC2D"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+            >Test Case 2</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="TC3"
+            data-toggle="tab"
+            href="#TC3D"
+            role="tab"
+            aria-controls="contact"
+            aria-selected="false"
+            >Test Case 3</a
+          >
+        </li>
+        <li class="nav-item">
+          <span
+            class="nav-link"
+            id="ADD_TC"
+            onclick="create_tc()"
+            role="tab"
+            aria-controls="contact"
+            aria-selected="false"
+            >+</span
+          >
+        </li>
+      </ul>
+      <div class="tab-content" id="TCTA">
+        <div
+          class="tab-pane fade show active"
+          id="TC1D"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <textarea class="form-control tc" id="TCTA1" rows="3"></textarea>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="TC2D"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+        >
+          <textarea class="form-control tc" id="TCTA2" rows="3"></textarea>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="TC3D"
+          role="tabpanel"
+          aria-labelledby="contact-tab"
+        >
+          <textarea class="form-control tc" id="TCTA3" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div align="center">
+      <button
+        type="submit"
+        onclick="handle_submit()"
+        class="btn btn-lg btn-primary"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+  <script type="text/javascript">
+    var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      lineNumbers: true,
+      mode: 'text/html',
+      matchBrackets: true,
+    });
+  </script>
+  <script>
+    let tabs = 3;
+    function create_tc(e) {
+      ++tabs;
+      if (tabs > 10) {
+        --tabs;
+        $('#tab_warning').html(
+          'Sorry Cannot Add more than 10 tabs in V. Alpha'
+        );
+      } else {
+        $('#test_case_tabs').append(`<li class="nav-item">
                         <a class="nav-link" id="TC${tabs}" data-toggle="tab" href="#TC${tabs}D" role="tab" aria-controls="contact" aria-selected="false">Test Case ${tabs}</a>
                   </li>`);
-                  $("#ADD_TC").remove();
-                  $("#test_case_tabs").append(`<li class="nav-item">
+        $('#ADD_TC').remove();
+        $('#test_case_tabs').append(`<li class="nav-item">
                               <span class="nav-link" id="ADD_TC" onclick="create_tc()" role="tab" aria-controls="contact" aria-selected="false">+</span>
                         </li>`);
-                        $("#TCTA").append(`<div class="tab-pane fade" id="TC${tabs}D" role="tabpanel" aria-labelledby="contact-tab">
-                              <textarea class="form-control" id="TCTA${tabs}" rows="3"></textarea>
-                        </div>`);
-                  }
-            }
-      </script>
+        $('#TCTA')
+          .append(`<div class="tab-pane fade" id="TC${tabs}D" role="tabpanel" aria-labelledby="contact-tab">
+                        <textarea class="form-control tc" id="TCTA${tabs}" rows="3"></textarea>
+                  </div>`);
+      }
+    }
+  </script>
+  <script>
+    function handle_submit() {
+      let tc = [];
+      $('.tc').each(function temp() {
+        let tmp = $(this)
+          .val()
+          .trim();
+        if (tmp === '') {
+          return;
+        }
+        tc.push(tmp);
+      });
+
+      if (tc.length === 0) {
+        $('#tc_missing_warning').text('Provide at least one test case...');
+        return;
+      }
+      $.ajax({
+        type: 'POST',
+        url: '/api/post',
+        xhrFields: {
+          withCredentials: true,
+        },
+        headers: {
+          'X-CSRF-TOKEN': Cookies.get('csrf_access_token'),
+        },
+        data: {
+          title: $('#title').val(),
+          description: $('#description').val(),
+          type: $('#type').val(),
+          lang: $('#lang').val(),
+          code: editor.getValue(),
+          testcases: JSON.stringify(tc),
+        },
+        success: function(data) {
+          if (!data.success) {
+            $('#err').html(data.err);
+          }
+          window.location.replace(data.link);
+        },
+        error: function(e) {
+          console.log(e);
+        },
+      });
+    }
+  </script>
 </div>
 {% endblock %}
