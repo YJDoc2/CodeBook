@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, Response, jsonify
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, jwt_optional
 from config import blacklist
 from models.Post import Post
 from config.lang_config import langs
@@ -29,9 +29,15 @@ app.register_blueprint(api)
 app.register_blueprint(user)
 app.register_blueprint(post)
 
+
 @app.route('/')
+@jwt_optional
 def homepage():
-	return render_template('homepage.html')
+    if get_jwt_identity():
+        return redirect('/dashboard')
+    else:
+        return render_template('homepage.html')
+
 
 @jwt.invalid_token_loader
 @jwt.unauthorized_loader
@@ -56,8 +62,12 @@ def signup():
 
 
 @app.route('/compiler')
+@jwt_optional
 def compiler():
-    return render_template('compiler.html', langs=langs)
+    if get_jwt_identity():
+        return render_template('compiler.html', langs=langs, logged_in=True)
+    else:
+        return render_template('compiler.html', langs=langs)
 
 
 @app.route('/dashboard')
@@ -68,12 +78,13 @@ def dashboard():
     for id in user['following']:
         u = User.objects(id=id)[0].to_mongo()
         for postid in u['posts']:
-            p = Post.objects(ID=postid)[0].to_mongo()
-            p['by'] = u['username']
-            posts.append(p)
-
+            if postid not in user['posts']:
+                p = Post.objects(ID=postid)[0].to_mongo()
+                p['by'] = u['username']
+                posts.append(p)
+    posts = posts[:MAX_POSTS_DASHBOARD]
     random.shuffle(posts)
-    return render_template('dashboard.html', logged_in=True, posts=posts[:MAX_POSTS_DASHBOARD])
+    return render_template('dashboard.html', logged_in=True, posts=posts)
 
 
 @app.route('/challenge')
@@ -85,10 +96,36 @@ def challenge():
 @app.route('/global')
 @jwt_required
 def globalwall():
+    user = User.objects(username=get_jwt_identity())[0].to_mongo()
     items = Post.objects(qtype='Global')
     items = [item.to_mongo() for item in items]
+    items = [item for item in items if item['_id'] not in user['posts']]
     items.reverse()
     return render_template('globalwall.html', posts=items[:MAX_POSTS_GLOBAL_WALL], logged_in=True)
+
+
+@app.route('/posts')
+@jwt_required
+def my_posts():
+    items = []
+    posts = Post.objects(originalPostBy=get_jwt_identity())
+    for post in posts:
+        item = post.to_mongo()
+        items.append(item)
+    return render_template('myposts.html', posts=items, logged_in=True)
+
+
+@app.route('/viewed')
+@jwt_required
+def viewed_posts():
+    items = []
+    user = User.objects(username=get_jwt_identity())[0].to_mongo()
+    posts_id = user['posts']
+    for postid in posts_id:
+        post = Post.objects(ID=postid)[0].to_mongo()
+        if post['originalPostBy'] != user['username']:
+            items.append(post)
+    return render_template('viewedposts.html', posts=items, logged_in=True)
 
 
 @app.route('/find')
@@ -96,9 +133,5 @@ def globalwall():
 def find_users():
     return render_template('findusers.html', logged_in=True)
 
-@app.route('/solve')
-#@jwt_required
-def solve():
-    return render_template('solve.html', langs=langs, logged_in=True)
 
 app.run(host='0.0.0.0', port='5000', debug=True)

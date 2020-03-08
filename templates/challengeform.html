@@ -328,6 +328,7 @@
         success: function(data) {
           if (!data.success) {
             $('#err').html(data.err);
+            return;
           }
           window.location.replace(data.link);
         },

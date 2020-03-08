@@ -10,3 +10,4 @@ class User(Document):
     followers = ListField(UUIDField())
     following = ListField(UUIDField())
     posts = ListField(UUIDField())
+    meta = {'collection': 'users'}

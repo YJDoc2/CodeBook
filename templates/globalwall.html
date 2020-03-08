@@ -16,8 +16,10 @@
         {{post.description}}
       </p>
       <hr width="80%" align="left" style="color:grey" />
-      <a href="#" class="card-link btn btn-md btn-success">Solve!</a>
-      <a href="#" class="card-link btn btn-md btn-primary">Solution</a>
+      <a href='{{"/solve/" ~ post._id}}'' class="card-link btn btn-md btn-success"
+        >Solve!</a
+      >
+      <a href='{{"/solution/" ~ post._id}}' class="card-link btn btn-md btn-primary">Solution</a>
     </div>
   </div>
   <br />

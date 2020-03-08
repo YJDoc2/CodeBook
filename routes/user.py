@@ -80,7 +80,7 @@ def find(name):
         del user['posts']
         del user['following']
         del user['followers']
-    return Response(json.dumps({'Success': True, 'users': ret}), mimetype="application/json", status=201)
+    return Response(json.dumps({'success': True, 'users': ret}), mimetype="application/json", status=201)
 
 
 @user.route('/api/follow/<string:name>')
@@ -91,7 +91,7 @@ def follow(name):
     User.objects(username=get_jwt_identity()).update_one(
         push__following=u2['_id'])
     User.objects(username=name).update_one(push__followers=u1['_id'])
-    return Response(json.dumps({'Success': True}), mimetype="application/json", status=201)
+    return Response(json.dumps({'success': True}), mimetype="application/json", status=201)
 
 
 @user.route('/user/logout', methods=['GET'])
