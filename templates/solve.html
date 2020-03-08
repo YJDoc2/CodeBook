@@ -57,7 +57,7 @@
     position: relative;
     height: 300px;
     width: auto;
-    background-image: url('laptop.jpeg');
+    background-image: url('/laptop.jpeg');
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -110,13 +110,14 @@
 <div class="container testbox">
   <form action="/">
     <div class="banner">
-      <h1 class="overlay">*Question Title Here*</h1>
+      <h1 class="overlay">{{post.title}}</h1>
     </div>
     <hr align="center" style="background-color: #000;width: 80%" />
     <br/>
     <div class="alert alert-primary" role="alert">
-      <h4 class="alert-heading">*Question Title*</h4>
-      <p><b>*Question Description*</b>Esse nulla mollit sint exercitation nostrud nostrud aliquip in nostrud mollit eiusmod pariatur reprehenderit culpa sunt fugiat pariatur esse aliqua ut enim ut quis adipisicing ut.</p>
+      <h4 class="alert-heading">{{post.title}}</h4>
+      <h6 class="alert-heading text-muted">{{post.originalPostBy}}</h6>
+      <p><b>{{post.description}}</b></p>
       <hr>
       <p class="mb-0">Select the language of your choice and start writing your code below to test the output. You can submit the solution when you know your output is correct.</p>
     </div>
@@ -141,24 +142,19 @@
       ></textarea>
     </div>
     <br />
-    <label for="testcases">Test Cases:</label>
+    <label for="testcases">Test Case</label>
     <div
       class="m-2 text-danger"
       id="err"
       style="font-size:x-large;text-align: center;"
     ></div>
     <div
-      class="m-2 text-danger"
-      id="tc_missing_warning"
-      style="font-size:x-large;text-align: center;"
-    ></div>
-    <div
-      class="m-2 text-danger"
-      id="tab_warning"
+      class="m-2 text-success"
+      id="success"
       style="font-size:x-large;text-align: center;"
     ></div>
     <div>
-      <ul class="nav nav-tabs" id="test_case_tabs" role="tablist">
+      <ul class="nav nav-tabs" id="test_case" role="tablist">
         <li class="nav-item">
           <a
             class="nav-link active"
@@ -168,34 +164,11 @@
             role="tab"
             aria-controls="home"
             aria-selected="true"
-            >Test Case 1</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            id="TC2"
-            data-toggle="tab"
-            href="#TC2D"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="false"
-            >Test Case 2</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            id="TC3"
-            data-toggle="tab"
-            href="#TC3D"
-            role="tab"
-            aria-controls="contact"
-            aria-selected="false"
-            >Test Case 3</a
+            >Test Case</a
           >
         </li>
       </ul>
+    </div>
       <div class="tab-content" id="TCTA">
         <div
           class="tab-pane fade show active"
@@ -203,30 +176,14 @@
           role="tabpanel"
           aria-labelledby="home-tab"
         >
-          <textarea disabled="true" class="form-control tc" id="TCTA1" rows="3">Test Case Here</textarea>
-        </div>
-        <div
-          class="tab-pane fade"
-          id="TC2D"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-          <textarea disabled="true" class="form-control tc" id="TCTA2" rows="3"></textarea>
-        </div>
-        <div
-          class="tab-pane fade"
-          id="TC3D"
-          role="tabpanel"
-          aria-labelledby="contact-tab"
-        >
-          <textarea disabled="true" class="form-control tc" id="TCTA3" rows="3"></textarea>
+          <textarea disabled="true" class="form-control tc" id="TCTA1" rows="3">{{post.testcases[0]}}</textarea>
         </div>
       </div>
       <div>
         <div>
           <button
           type="submit"
-          onclick="handle_submit()"
+          onclick="handle_test()"
           class="btn btn-primary"
           style="width: auto"
             >
@@ -245,8 +202,8 @@
       >
         Submit Solution
       </button>
-    </form> 
     </div>
+    </form> 
   </div>
   <script type="text/javascript">
     var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
@@ -257,24 +214,14 @@
   </script>
   <script>
     function handle_submit() {
-      let tc = [];
-      $('.tc').each(function temp() {
-        let tmp = $(this)
-          .val()
-          .trim();
-        if (tmp === '') {
-          return;
-        }
-        tc.push(tmp);
-      });
-
-      if (tc.length === 0) {
-        $('#tc_missing_warning').text('Provide at least one test case...');
-        return;
+      code = editor.getValue().trim()
+      if(code === '' ){
+        $('#err').html('Please Write Some Code To Test...');
+        return
       }
       $.ajax({
         type: 'POST',
-        url: '/api/post',
+        url: '{{"/submit/" ~ post._id}}',
         xhrFields: {
           withCredentials: true,
         },
@@ -282,18 +229,22 @@
           'X-CSRF-TOKEN': Cookies.get('csrf_access_token'),
         },
         data: {
-          title: $('#title').val(),
-          description: $('#description').val(),
-          type: $('#type').val(),
           lang: $('#lang').val(),
           code: editor.getValue(),
-          testcases: JSON.stringify(tc),
         },
         success: function(data) {
-          if (!data.success) {
-            $('#err').html(data.err);
+          if(data.redirect){
+            window.location.replace(data.redirect);  
           }
-          window.location.replace(data.link);
+          if (!data.success) {
+            $('#output').html(data.err);
+            console.log(data)
+            return;
+          }
+          
+          console.log(data)
+          $('#success').html('Success!!!');
+          setTimeout(()=>{window.location.replace(data.link);},500) 
         },
         error: function(e) {
           console.log(e);
