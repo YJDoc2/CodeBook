@@ -1,6 +1,41 @@
 {% extends "navbar.html" %} {% block content %}
-<div class="container">
-  <br />
+<link
+  href="{{url_for('static', filename='css/Homestyle.css')}}"
+  rel="stylesheet"
+/>
+<div class="container"><br/>
+<section id="why-us" class="wow fadeIn" style="text-align: center">
+  <header class="section-header">
+    <h3>Aute voluptate labore.</h3>
+    <p>Laudem latine persequeris id sed, ex fabulas delectus quo. No vel partiendo abhorreant vituperatoribus.</p>
+  </header>
+  <div class="container">
+  <hr color="white">
+  <div class="row counters">
+    <div class="col-lg-3 col-6 text-center">
+      <span data-toggle="counter-up">274</span>
+      <p>Clients</p>
+    </div>
+
+    <div class="col-lg-3 col-6 text-center">
+      <span data-toggle="counter-up">421</span>
+      <p>Projects</p>
+    </div>
+
+    <div class="col-lg-3 col-6 text-center">
+      <span data-toggle="counter-up">1,364</span>
+      <p>Hours Of Support</p>
+    </div>
+
+    <div class="col-lg-3 col-6 text-center">
+      <span data-toggle="counter-up">18</span>
+      <p>Hard Workers</p>
+    </div>
+
+  </div>
+</div>
+</section>
+<hr/>
   <!-- Start of Array Element -->
   {% for post in posts%}
   <div
