@@ -1,0 +1,154 @@
+{% extends "navbar.html" %} {% block content %}
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+  rel="stylesheet"
+/>
+<!-- Libraries CSS Files -->
+<link
+  href="{{url_for('static', filename='lib/animate/animate.min.css')}}"
+  rel="stylesheet"
+/>
+<link
+  href="{{url_for('static', filename='css/Homestyle.css')}}"
+  rel="stylesheet"
+/>
+<!--==========================
+    Intro Section
+  ============================-->
+<section id="intro" class="clearfix">
+  <div class="container">
+    <div class="intro-img">
+      <img src="img/intro-img.svg" alt="" class="img-fluid" />
+    </div>
+
+    <div class="intro-info">
+      <h2>
+        Transform your <br /><span>Ideas</span> into lines of <br /><span
+          >Code</span
+        ><br />
+      </h2>
+      <div>
+        {% if not logged_in %}<a href="/signup" class="btn-get-started scrollto"
+          >Join Us</a
+        >{% endif %}
+        <a href="/compiler" class="btn-services scrollto">Online Compiler</a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- #intro -->
+
+<main id="main">
+  <!--==========================
+      About Us Section
+    ============================-->
+  <section id="about">
+    <div class="container">
+      <header align="center">
+        <h3>About Us</h3>
+        <p>
+          At CodeBook, our primary goal is to connect like-minded coders and
+          provide a platform for them to share their challenges, come up with
+          solutions for user submitted problems and compile any code.
+        </p>
+      </header>
+
+      <div class="row about-container">
+        <div
+          class="col-lg-6 content order-lg-1 order-2 wow fadeInUp"
+          style="padding-top: 100px"
+        >
+          <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
+            <h2><a href="/find">Follow other Coders</a></h2>
+            <p>
+              Follow other users to get notified of their posts! Share your
+              questions with one another and keep Coding!
+            </p>
+            <p>
+              Developers can connect with each other, work on solving problems
+              and learn all at the same time!
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-6 background order-lg-2 order-1 wow fadeInUp">
+          <img src="img/about-img.svg" class="img-fluid" alt="" />
+        </div>
+      </div>
+
+      <div class="row about-extra">
+        <div class="col-lg-6 wow fadeInUp">
+          <img src="img/about-extra-1.svg" class="img-fluid" alt="" />
+        </div>
+        <div
+          class="col-lg-6 wow fadeInUp pt-5 pt-lg-0"
+          style="padding-top: 25px !important;"
+        >
+          <h2><a href="/challenge">Create new Challenges</a></h2>
+          <p>
+            Come up with new ideas and post them here! You can share all sorts
+            of problems related to programming by simply registering with us and
+            submitting your challenges here!
+          </p>
+          <p>
+            Describe your problem statement, give it an eye catching title and
+            submit your solution. With these simple steps, any developer can
+            post their challenges
+          </p>
+        </div>
+      </div>
+
+      <div class="row about-extra">
+        <div class="col-lg-6 wow fadeInUp order-1 order-lg-2">
+          <img src="img/about-extra-2.svg" class="img-fluid" alt="" />
+        </div>
+
+        <div
+          class="col-lg-6 wow fadeInUp pt-4 pt-lg-0 order-2 order-lg-1"
+          style="padding-top: 100px !important;"
+        >
+          <h2>
+            <a href="/posts">Post your Challenges to share with the world!</a>
+          </h2>
+          <p>
+            Once you post your challenge, every user registered with us can try
+            to crack the logic behind it. Learn to code with fun!
+          </p>
+          <p>
+            You can also choose to share your challenge with your friends or to
+            the entire website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- #about -->
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        <strong>CodeBook</strong>. A place to share your ideas!
+      </div>
+      <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=NewBiz
+        -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer>
+  <!-- #footer -->
+  <script src="{{url_for('static', filename='lib/mobile-nav/mobile-nav.js')}}"></script>
+  <script src="{{url_for('static', filename='lib/wow/wow.min.js')}}"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="{{url_for('static', filename='js/mainHomepage.js')}}"></script>
+  {% endblock %}
+</main>

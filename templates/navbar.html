@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>CodeBook</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+        a:hover { 
+            text-decoration: none !important; 
+        } 
+		.wrapper {
+			width: 100%; }
+		#sidebar {
+			min-width: 270px;
+			max-width: 270px;
+			background: #16409E;
+			color: #fff;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+			position: relative; }
+		#sidebar .h6 {
+			color: #fff; }
+		#sidebar.active {
+			margin-left: -270px; }
+		#sidebar.active .custom-menu {
+			margin-right: -50px; }
+		#sidebar h1 {
+			margin-bottom: 20px;
+			font-weight: 700; }
+		#sidebar h1 .logo {
+			color: #fff; }
+		#sidebar ul.components {
+			padding: 0; }
+		#sidebar ul li {
+			font-size: 16px; }
+		#sidebar ul li > ul {
+			margin-left: 10px; }
+		#sidebar ul li > ul li {
+			font-size: 14px; }
+		#sidebar ul li a {
+			padding: 10px 0;
+			display: block;
+			color: rgba(255, 255, 255, 0.6);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+		#sidebar ul li a:hover {
+			color: #fff; }
+		#sidebar ul li.active > a {
+			background: transparent;
+			color: #fff; }
+		@media (max-width: 991.98px) {
+			#sidebar {
+				margin-left: -270px; }
+			#sidebar.active {
+				margin-left: 0; }
+			#sidebar .custom-menu {
+				margin-right: -60px !important;
+				top: 10px !important; } 
+		}
+		#sidebar .custom-menu {
+			display: inline-block;
+			position: absolute;
+			top: 20px;
+			right: 0;
+			margin-right: -20px;
+			-webkit-transition: 0.3s;
+			-o-transition: 0.3s;
+			transition: 0.3s; }
+		@media (prefers-reduced-motion: reduce) {
+			#sidebar .custom-menu {
+				-webkit-transition: none;
+				-o-transition: none;
+				transition: none; } 
+		}
+		#sidebar .custom-menu .btn {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%; }
+		#sidebar .custom-menu .btn.btn-primary {
+			background: #393c7f;
+			border-color: #393c7f; }
+		#sidebar .custom-menu .btn.btn-primary:hover, #sidebar .custom-menu .btn.btn-primary:focus {
+			background: #393c7f !important;
+			border-color: #393c7f !important; }
+
+		a[data-toggle="collapse"] {
+		  position: relative; }
+
+		@media (max-width: 991.98px) {
+		  #sidebarCollapse span {
+		    display: none; } }
+
+		#content {
+		  width: 100%;
+		  padding: 0;
+		  min-height: 100vh;
+		  -webkit-transition: all 0.3s;
+		  -o-transition: all 0.3s;
+		  transition: all 0.3s; }
+
+		@media screen and (max-width: 768px){
+		  .pageBody{
+		  	margin-top: 50px;
+		  	margin-left: 0px !important;
+		  }
+		}
+	</style>
+    {% block links%}
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	
+    {% endblock %}
+	<script
+	src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+	></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+  </head>
+  <body style="background:#eeeeee">
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar" class="" style="z-index: 2 !important;">
+				<font face="Roboto">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+						<i class="fa fa-bars"></i>
+						<span class="sr-only">Toggle Menu</span>
+	        		</button>
+        		</div>
+				<div class="p-4">
+					<h1><a href="/" class="logo">CodeBook</a></h1>
+				<ul class="list-unstyled components mb-5">
+				
+				{% if not logged_in%}
+				<li id="login">
+					<a href="/login"><span class="fa fa-user mr-3"></span> Login</a>
+				</li>
+				<li id="signup">
+					<a href="/signup"><span class="fa fa-user-plus mr-3"></span> Create account</a>
+				</li>
+				{%else%}
+
+				<li id="dashboard">
+					<a href="/dashboard"><span class="fa fa-home mr-3"></span> Home</a>
+				</li>
+				<li id="posts">
+					<a href="/posts"><span class="fa fa-th-list mr-3"></span> My Posts</a>
+				</li>
+				<li id="finduser">
+					<a href="/find"><span class="fa fa-users mr-3"></span> Find Users</a>
+				</li>
+				<li id="viewed">
+					<a href="/viewed"><span class="fa fa-check mr-3"></span> Viewed Posts</a>
+				</li>
+				<li id="global">
+					<a href="/global"><span class="fa fa-globe mr-3"></span> Global</a>
+				</li>
+				<li>
+					<a href="/user/logout"><span class="fa fa-user mr-3"></span> Logout</a>
+				</li>
+				<li id="challenge">
+					<a href="/challenge"><span class="fa fa-upload mr-3"></span> Submit a Challenge</a>
+				</li>
+				{%endif%}
+				<li id="compiler">
+					<a href="/compiler"><span class="fa fa-code mr-3"></span> Online IDE</a>
+				</li>
+				
+				</ul>
+		  </div>
+		</font>
+	</nav>
+
+    
+        <!-- Page Content  -->
+      <div id="content" class="pageBody" style="background:#eeeeee;margin-right: 0;">
+        {% block content %}{% endblock %}
+	  </div>
+
+    <script type="text/javascript">
+ 	$(document).ready(function(){
+            var pageURL = $(location).attr("href");
+			pageURL='#'+pageURL.slice(22,pageURL.length);
+			if(pageURL === '#')return
+            $(pageURL).attr('class','active')
+    });
+    (function($) {
+
+	var fullHeight = function() {
+
+		$('.js-fullheight').css('height', $(window).height());
+		$(window).resize(function(){
+			$('.js-fullheight').css('height', $(window).height());
+		});
+
+	};
+	fullHeight();
+
+	$('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+  });
+
+})(jQuery);
+</script>
+  </body>
+</html>

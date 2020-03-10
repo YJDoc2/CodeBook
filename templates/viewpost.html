@@ -1,0 +1,231 @@
+{% extends "navbar.html" %} {% block content %}
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+  crossorigin="anonymous"
+/>
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='codemirror.css')}}"
+/>
+<script src="{{url_for('static', filename='codemirror.js')}}"></script>
+<script src="{{url_for('static', filename='addon/edit/matchbrackets.js')}}"></script>
+<style>
+  form,
+  input,
+  select,
+  textarea,
+  p {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 14px;
+    color: #666;
+    line-height: 22px;
+  }
+  h1.overlay {
+    position: absolute;
+    margin: 0;
+    font-size: 3em;
+    color: #fff;
+    z-index: 2;
+  }
+  .testbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    padding: 20px;
+  }
+  form {
+    width: 100%;
+    padding: 20px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 0 20px 0 #095484;
+  }
+
+  .banner {
+    position: relative;
+    height: 300px;
+    width: auto;
+    background-image: url('/laptop.jpeg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .banner::after {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  input,
+  textarea {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  textarea {
+    width: calc(100% - 12px);
+    padding: 5px;
+  }
+  label {
+    font-weight: bold;
+  }
+  @media screen and (max-width: 768px) {
+    .banner {
+      height: 200px;
+    }
+  }
+</style>
+<div class="container testbox">
+  <form>
+    <div class="banner">
+      <h1 class="overlay">{{post.title}}</h1>
+    </div>
+    <hr align="center" style="background-color: #000;width: 80%" />
+    <br />
+
+    <div class="alert alert-primary" role="alert">
+      <h4 class="alert-heading">{{post.title}}</h4>
+      <h6 class="alert-heading text-muted">{{post.originalPostBy}}</h6>
+      <p><b>{{post.description}}</b></p>
+      <hr />
+    </div>
+    <h4>
+      <label for="code">Solution</label>
+    </h4>
+
+    <textarea
+      class="code"
+      style="font-family: Consolas; height: 20rem;"
+      id="code"
+      name="code"
+    >
+      {{post.code}}
+    </textarea>
+
+    <br />
+    <div>
+      <ul class="nav nav-tabs" id="test_case_tabs" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="TC1"
+            data-toggle="tab"
+            href="#TC1D"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+            >Test Case 1
+          </a>
+        </li>
+        {%for case in post.testcases[1:]%}
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="TC{{loop.index+1}}"
+            data-toggle="tab"
+            href="#TC{{loop.index+1}}D"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+            >Test Case {{loop.index+1}}
+          </a>
+        </li>
+        {%endfor%}
+      </ul>
+      <div class="tab-content" id="TCTA">
+        <div
+          class="tab-pane fade show active"
+          id="TC1D"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <textarea class="form-control tc" id="TCTA1" rows="3">
+{{post.testcases[0]}}</textarea
+          >
+        </div>
+        {%for case in post.testcases[1:]%}
+        <div
+          class="tab-pane fade"
+          id="TC{{loop.index+1}}D"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <textarea class="form-control tc" id="TCTA{{loop.index+1}}" rows="3">
+{{case}}</textarea
+          >
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+    <div>
+      <ul class="nav nav-tabs" id="output_tabs" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="OP1"
+            data-toggle="tab"
+            href="#OP1D"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+            >Output 1
+          </a>
+        </li>
+        {%for op in post.outputs[1:]%}
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="OP{{loop.index+1}}"
+            data-toggle="tab"
+            href="#OP{{loop.index+1}}D"
+            role="tab"
+            aria-controls="home"
+            aria-selected="false"
+            >Output {{loop.index+1}}
+          </a>
+        </li>
+        {%endfor%}
+      </ul>
+
+      <div class="tab-content" id="TCOP">
+        <div
+          class="tab-pane fade show active"
+          id="OP1D"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <textarea class="form-control tc" id="TCOP{{1}}" rows="3">
+{{post.outputs[0]}}</textarea
+          >
+        </div>
+        {%for op in post.outputs[1:]%}
+        <div
+          class="tab-pane fade"
+          id="OP{{loop.index+1}}D"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <textarea class="form-control tc" id="TCOP{{loop.index+1}}" rows="3">
+{{op}}</textarea
+          >
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

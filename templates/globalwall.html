@@ -1,0 +1,29 @@
+{% extends "navbar.html" %} {% block content %}
+<div class="container">
+  <br />
+  <!-- Start of Array Element -->
+  {% for post in posts%}
+  <div
+    class="card"
+    style="box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 3px 10px 0 rgba(0,0,0,0.19) !important;"
+  >
+    <div class="card-header">
+      <h5>{{post.title}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">By {{post.originalPostBy}}</h6>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        {{post.description}}
+      </p>
+      <hr width="80%" align="left" style="color:grey" />
+      <a href='{{"/solve/" ~ post._id}}'' class="card-link btn btn-md btn-success"
+        >Solve!</a
+      >
+      <a href='{{"/solution/" ~ post._id}}' class="card-link btn btn-md btn-primary">Solution</a>
+    </div>
+  </div>
+  <br />
+  {%endfor%}
+  <!-- End -->
+</div>
+{% endblock %}

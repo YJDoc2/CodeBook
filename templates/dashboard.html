@@ -1,45 +1,68 @@
-{% extends "base.html" %} {% block content %}
-<div class="container">
-	<br/>
-	<!-- Start of Array Element -->
-	<div class="card" style="box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 3px 10px 0 rgba(0,0,0,0.19) !important;">
-		<div  class="card-header">
-			<h5>Problem Statement Name</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">By User_Name</h6>
-		</div>
-		<div class="card-body">
-		    <p class="card-text">The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue riverThe lazy fox jumps over the blue river.</p>
-		    <hr width="80%" align="left" style="color:grey">
-		    <a href="#" class="card-link btn btn-md btn-success">Solve!</a>
-		    <a href="#" class="card-link btn btn-md btn-primary">Solution</a>
-		</div>
-	</div>
-	<br/>
-	<!-- End -->
-<div class="card" style="box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 3px 10px 0 rgba(0,0,0,0.19) !important;">
-		<div  class="card-header">
-			<h5>Problem Statement Name</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">By User_Name</h6>
-		</div>
-		<div class="card-body">
-		    <p class="card-text">The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue riverThe lazy fox jumps over the blue river.</p>
-		    <hr width="80%" align="left" style="color:grey">
-		    <a href="#" class="card-link btn btn-md btn-success">Solve!</a>
-		    <a href="#" class="card-link btn btn-md btn-primary">Solution</a>
-		</div>
-	</div>
-	<br/><div class="card" style="box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 3px 10px 0 rgba(0,0,0,0.19) !important;">
-		<div  class="card-header">
-			<h5>Problem Statement Name</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">By User_Name</h6>
-		</div>
-		<div class="card-body">
-		    <p class="card-text">The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue river.The lazy fox jumps over the blue riverThe lazy fox jumps over the blue river.</p>
-		    <hr width="80%" align="left" style="color:grey">
-		    <a href="#" class="card-link btn btn-md btn-success">Solve!</a>
-		    <a href="#" class="card-link btn btn-md btn-primary">Solution</a>
-		</div>
-	</div>
-	<br/>
+{% extends "navbar.html" %} {% block content %}
+<link
+  href="{{url_for('static', filename='css/Homestyle.css')}}"
+  rel="stylesheet"
+/>
+
+<div class="container"><br/>
+<section id="why-us" class="wow fadeIn" style="text-align: center">
+  <header class="section-header">
+    <h3>Hi,{{user['username']}}</h3>
+    
+  </header>
+  <div class="container">
+  <hr color="white">
+  <div class="row counters" >
+    <div class="col-lg-4 col-6 text-center">
+      <span data-toggle="counter-up">{{user['followers'] | length}}</span>
+      <p>Followers</p>
+    </div>
+
+    <div class="col-lg-4 col-6 text-center">
+      <span data-toggle="counter-up">{{user['following'] | length}}</span>
+      <p>Following</p>
+    </div>
+
+    <div class="col-lg-4 col-6 text-center">
+      <span data-toggle="counter-up">{{items | length}}</span>
+      <p>No. of Posts</p>
+    </div>
+
+    <!-- <div class="col-lg-3 col-6 text-center">
+      <span data-toggle="counter-up">18</span>
+      <p>Hard Workers</p>
+    </div> -->
+
+  </div>
 </div>
-{% endblock %}	
+</section>
+<hr/>
+  <!-- Start of Array Element -->
+  {% for post in posts%}
+  <div
+    class="card"
+    style="box-shadow:0 5px 8px 0 rgba(0,0,0,0.2),0 3px 10px 0 rgba(0,0,0,0.19) !important;"
+  >
+    <div class="card-header">
+      <h4>{{post.title}}</h4>
+      <h5 class="card-subtitle mb-2 text-muted">Shared By {{post.by}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        Posted By {{post.originalPostBy}}
+      </h6>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        {{post.description}}
+      </p>
+      <hr width="80%" align="left" style="color:grey" />
+      <a href='{{"/solve/" ~ post._id}}'' class="card-link btn btn-md btn-success"
+        >Solve!</a
+      >
+      <a href='{{"/solution/" ~ post._id}}' class="card-link btn btn-md btn-primary">Solution</a>
+    </div>
+  </div>
+  <br />
+  {% endfor %}
+  <!-- End -->
+</div>
+{% endblock %}
