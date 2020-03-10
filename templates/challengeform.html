@@ -304,8 +304,8 @@
         tc.push(tmp);
       });
 
-      if (tc.length === 0) {
-        $('#tc_missing_warning').text('Provide at least one test case...');
+      if (tc.length < 3) {
+        $('#tc_missing_warning').text('Provide at least three test cases...');
         return;
       }
       $.ajax({

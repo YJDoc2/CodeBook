@@ -251,6 +251,41 @@
         },
       });
     }
+    function handle_test) {
+      code = editor.getValue().trim()
+      if(code === '' ){
+        $('#err').html('Please Write Some Code To Test...');
+        return
+      }
+      $.ajax({
+        type: 'POST',
+        url: '{{"/api/test/" ~ post._id}}',
+        xhrFields: {
+          withCredentials: true,
+        },
+        headers: {
+          'X-CSRF-TOKEN': Cookies.get('csrf_access_token'),
+        },
+        data: {
+          lang: $('#lang').val(),
+          code: editor.getValue(),
+        },
+        success: function(data) {
+          if(data.redirect){
+            window.location.replace(data.redirect);  
+          }
+          if (!data.success) {
+            $('#output').html(data.err);
+            return;
+          }
+          
+          $('#success').html('Success!!!');
+        },
+        error: function(e) {
+          console.log(e);
+        },
+      });
+    }
   </script>
 </div>
 {% endblock %}

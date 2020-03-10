@@ -53,7 +53,7 @@ class CPP14:
     lang_name = 'C++'
     ext = '.cpp'
     compiler = 'g++'
-    ops = '-std=c++14 -o'
+    ops = ' -o '
     type = Lang_type.COMPILED
     compile_time = 5
     run_time = 5

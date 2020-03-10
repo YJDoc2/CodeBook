@@ -54,8 +54,6 @@ def mypost(id):
     post = Post.objects(ID=id)[0].to_mongo()
     return render_template('viewpost.html', logged_in=True, post=post)
 
-    return redirect('/dashboard')
-
 
 @post.route('/solve/<uuid:id>', methods=['GET'])
 @jwt_required

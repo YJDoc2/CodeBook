@@ -29,7 +29,9 @@
         ><br />
       </h2>
       <div>
-        <a href="/signup" class="btn-get-started scrollto">Join Us</a>
+        {% if not logged_in %}<a href="/signup" class="btn-get-started scrollto"
+          >Join Us</a
+        >{% endif %}
         <a href="/compiler" class="btn-services scrollto">Online Compiler</a>
       </div>
     </div>
@@ -58,7 +60,7 @@
           style="padding-top: 100px"
         >
           <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
-            <h2><a href="">Follow other Coders</a></h2>
+            <h2><a href="/find">Follow other Coders</a></h2>
             <p>
               Follow other users to get notified of their posts! Share your
               questions with one another and keep Coding!
@@ -107,9 +109,7 @@
           style="padding-top: 100px !important;"
         >
           <h2>
-            <a href="/dashboard"
-              >Post your Challenges to share with the world!</a
-            >
+            <a href="/posts">Post your Challenges to share with the world!</a>
           </h2>
           <p>
             Once you post your challenge, every user registered with us can try

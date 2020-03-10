@@ -34,7 +34,7 @@ app.register_blueprint(post)
 @jwt_optional
 def homepage():
     if get_jwt_identity():
-        return redirect('/dashboard')
+        return render_template('homepage.html', logged_in=True)
     else:
         return render_template('homepage.html')
 
