@@ -74,7 +74,6 @@ def compiler():
 @jwt_required
 def dashboard():
     user = User.objects(username=get_jwt_identity())[0].to_mongo()
-    # print(user)
     posts = []
     for id in user['following']:
         u = User.objects(id=id)[0].to_mongo()
@@ -90,8 +89,7 @@ def dashboard():
     for post in x:
         item = post.to_mongo()
         items.append(item)
-    # print("asas", items)
-    return render_template('dashboard.html', logged_in=True, posts=posts, user=user, items=items)
+    return render_template('dashboard.html', logged_in=True, posts=posts, user=user, items=items
 
 
 @app.route('/challenge')
@@ -119,9 +117,7 @@ def my_posts():
     for post in posts:
         item = post.to_mongo()
         items.append(item)
-    print(posts)
     return render_template('myposts.html', posts=items, logged_in=True)
-
 
 @app.route('/viewed')
 @jwt_required
