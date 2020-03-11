@@ -84,7 +84,12 @@ def dashboard():
                 posts.append(p)
     posts = posts[:MAX_POSTS_DASHBOARD]
     random.shuffle(posts)
-    return render_template('dashboard.html', logged_in=True, posts=posts)
+    items = []
+    x = Post.objects(originalPostBy=get_jwt_identity())
+    for post in x:
+        item = post.to_mongo()
+        items.append(item)
+    return render_template('dashboard.html', logged_in=True, posts=posts, user=user, items=items
 
 
 @app.route('/challenge')
@@ -113,7 +118,6 @@ def my_posts():
         item = post.to_mongo()
         items.append(item)
     return render_template('myposts.html', posts=items, logged_in=True)
-
 
 @app.route('/viewed')
 @jwt_required
