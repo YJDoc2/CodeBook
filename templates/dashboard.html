@@ -3,33 +3,29 @@
   href="{{url_for('static', filename='css/Homestyle.css')}}"
   rel="stylesheet"
 />
+
 <div class="container"><br/>
 <section id="why-us" class="wow fadeIn" style="text-align: center">
   <header class="section-header">
-    <h3>Aute voluptate labore.</h3>
-    <p>Laudem latine persequeris id sed, ex fabulas delectus quo. No vel partiendo abhorreant vituperatoribus.</p>
+    <h3>Hi,{{user['username']}}</h3>
+    
   </header>
   <div class="container">
   <hr color="white">
-  <div class="row counters">
-    <div class="col-lg-3 col-6 text-center">
-      <span data-toggle="counter-up">274</span>
-      <p>Clients</p>
+  <div class="row counters" >
+    <div class="col-lg-4 col-6 text-center">
+      <span data-toggle="counter-up">{{user['followers'] | length}}</span>
+      <p>Followers</p>
     </div>
 
-    <div class="col-lg-3 col-6 text-center">
-      <span data-toggle="counter-up">421</span>
-      <p>Projects</p>
+    <div class="col-lg-4 col-6 text-center">
+      <span data-toggle="counter-up">{{user['following'] | length}}</span>
+      <p>Following</p>
     </div>
 
-    <div class="col-lg-3 col-6 text-center">
-      <span data-toggle="counter-up">1,364</span>
-      <p>Hours Of Support</p>
-    </div>
-
-    <div class="col-lg-3 col-6 text-center">
-      <span data-toggle="counter-up">18</span>
-      <p>Hard Workers</p>
+    <div class="col-lg-4 col-6 text-center">
+      <span data-toggle="counter-up">{{items | length}}</span>
+      <p>No. of Posts</p>
     </div>
 
   </div>
