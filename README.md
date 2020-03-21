@@ -34,7 +34,30 @@ to crack the logic behind it. Learn to code with fun!
 You can also choose to share your challenge with your friends or to
 the entire website.
 
-<h3>Glimpse of our CodeBook:</h4>
+## Technologies Used:
+<table style="width: 100%;" >
+	<tbody>
+		<tr style="height: 21px;">
+			<td style="width: 28.8348%; height: 21px;">&nbsp;Backend</td>
+			<td style="width: 70.1652%; height: 21px;">&nbsp;Flask</td>
+		</tr>
+		<tr style="height: 20.6667px;">
+			<td style="width: 28.8348%; height: 20.6667px;">&nbsp;Frontend</td>
+			<td style="width: 70.1652%; height: 20.6667px;">&nbsp;HTML,CSS,Javascript and Jinga</td>
+		</tr>
+		<tr style="height: 20px;">
+			<td style="width: 28.8348%; height: 20px;">&nbsp;Database&nbsp;</td>
+			<td style="width: 70.1652%; height: 20px;">&nbsp;MongoDB</td>
+		</tr>
+		<tr style="height: 21px;">
+			<td style="width: 28.8348%; height: 21px;">&nbsp;Authnetication</td>
+			<td style="width: 70.1652%; height: 21px;">&nbsp;JWT</td>
+		</tr>
+	</tbody>
+</table>
+<!-- DivTable.com -->
+
+## Glimpse of our CodeBook:
 
 #### Main Page
 <img src = "./Readme_Img/MainPage.png" alt ="MainPage Screen Screenshot" />
