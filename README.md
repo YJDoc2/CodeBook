@@ -33,3 +33,26 @@ to crack the logic behind it. Learn to code with fun!
 
 You can also choose to share your challenge with your friends or to
 the entire website.
+
+<h3>Glimpse of our CodeBook:</h4>
+
+#### Login
+<img src = "./Readme_Img/Login.png" alt ="Login Screen Screenshot" />
+
+#### SignUp
+<img src = "./Readme_Img/SignUp.png" alt ="SignUp Screen Screenshot" />
+
+#### Home
+<img src = "./Readme_Img/Home.png" alt ="Home Screen Screenshot" />
+
+#### MyPost
+<img src = "./Readme_Img/MyPost.png" alt ="MyPost Screen Screenshot" />
+
+#### FindUser
+<img src = "./Readme_Img/FIndUser.png" alt ="FindUser Screen Screenshot" />
+
+#### PostChallenge
+<img src = "./Readme_Img/PostChallenge.png" alt ="PostChallenge Screen Screenshot" />
+
+#### Online IDE
+<img src = "./Readme_Img/OnlineIde.png" alt ="OnlineIde Screen Screenshot" />
