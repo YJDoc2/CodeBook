@@ -74,6 +74,12 @@ the entire website.
 #### MyPost
 <img src = "./Readme_Img/MyPost.png" alt ="MyPost Screen Screenshot" />
 
+#### Solving Challenge
+<img src = "./Readme_Img/Solving.png" alt ="Solving Screen Screenshot" />
+
+#### View Solution
+<img src = "./Readme_Img/Solution.png" alt ="Solution Screen Screenshot" />
+
 #### FindUser
 <img src = "./Readme_Img/FIndUser.png" alt ="FindUser Screen Screenshot" />
 
