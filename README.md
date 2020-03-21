@@ -36,6 +36,9 @@ the entire website.
 
 <h3>Glimpse of our CodeBook:</h4>
 
+#### Main Page
+<img src = "./Readme_Img/MainPage.png" alt ="MainPage Screen Screenshot" />
+
 #### Login
 <img src = "./Readme_Img/Login.png" alt ="Login Screen Screenshot" />
 
