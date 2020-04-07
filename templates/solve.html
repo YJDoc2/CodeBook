@@ -251,7 +251,7 @@
         },
       });
     }
-    function handle_test) {
+    function handle_test() {
       code = editor.getValue().trim()
       if(code === '' ){
         $('#err').html('Please Write Some Code To Test...');
@@ -271,9 +271,10 @@
           code: editor.getValue(),
         },
         success: function(data) {
-          if(data.redirect){
-            window.location.replace(data.redirect);  
-          }
+          console.log(data)
+          // if(data.redirect){
+          //   window.location.replace(data.redirect);  
+          // }
           if (!data.success) {
             $('#output').html(data.err);
             return;

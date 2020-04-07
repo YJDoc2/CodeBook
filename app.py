@@ -89,7 +89,7 @@ def dashboard():
     for post in x:
         item = post.to_mongo()
         items.append(item)
-    return render_template('dashboard.html', logged_in=True, posts=posts, user=user, items=items
+    return render_template('dashboard.html', logged_in=True, posts=posts, user=user, items=items)
 
 
 @app.route('/challenge')
@@ -118,6 +118,7 @@ def my_posts():
         item = post.to_mongo()
         items.append(item)
     return render_template('myposts.html', posts=items, logged_in=True)
+
 
 @app.route('/viewed')
 @jwt_required
