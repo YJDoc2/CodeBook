@@ -2,12 +2,12 @@
 
 ## About
 
-This is project done in SE fro Python language by : Tejas Ghone,Vatsal Soni, Yashodhan Joshi , Yatharth Vyas
+This is project done in SE fro Python language by : Tejas Ghone, Vatsal Soni, Yashodhan Joshi, Yatharth Vyas
 
 ## About Project
 
-Transform your Ideas into lines of Code
-At CodeBook, our primary goal is to connect like-minded coders and
+Transform your Ideas into lines of code
+at CodeBook, our primary goal is to connect like-minded coders and
 provide a platform for them to share their challenges, come up with
 solutions for user submitted problems and compile any code.
 
@@ -54,7 +54,7 @@ the entire website.
 			<td style="width: 70.1652%; height: 20px;">&nbsp;MongoDB</td>
 		</tr>
 		<tr style="height: 21px;">
-			<td style="width: 28.8348%; height: 21px;">&nbsp;Authnetication</td>
+			<td style="width: 28.8348%; height: 21px;">&nbsp;Authentication</td>
 			<td style="width: 70.1652%; height: 21px;">&nbsp;JWT</td>
 		</tr>
 	</tbody>
@@ -79,11 +79,11 @@ the entire website.
 
 <img src = "./Readme_Img/Home.png" alt ="Home Screen Screenshot" />
 
-#### MyPost
+#### My Posts
 
 <img src = "./Readme_Img/MyPost.png" alt ="MyPost Screen Screenshot" />
 
-#### Solving Challenge
+#### Solve Challenges
 
 <img src = "./Readme_Img/Solving.png" alt ="Solving Screen Screenshot" />
 
@@ -91,11 +91,11 @@ the entire website.
 
 <img src = "./Readme_Img/Solution.png" alt ="Solution Screen Screenshot" />
 
-#### FindUser
+#### Find Users
 
 <img src = "./Readme_Img/FIndUser.png" alt ="FindUser Screen Screenshot" />
 
-#### PostChallenge
+#### Post Challenges
 
 <img src = "./Readme_Img/PostChallenge.png" alt ="PostChallenge Screen Screenshot" />
 
